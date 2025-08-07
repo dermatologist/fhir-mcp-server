@@ -29,7 +29,7 @@ license = "Apache-2.0"
 license-files = ["LICEN[CS]E*"]
 name = "fhir-mcp-server"
 readme = {file = "README.md", content-type = "text/markdown"}
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 version = "0.9.0"
 
 [build-system]
