@@ -25,6 +25,7 @@ configs: ServerConfigs = ServerConfigs()
 
 server_provider: OAuthServerProvider = OAuthServerProvider(configs=configs)
 
+
 def register_read_tool(mcp: FastMCP) -> None:
     @mcp.tool(
         description=(

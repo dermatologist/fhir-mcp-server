@@ -175,7 +175,9 @@ class OAuthServerProvider(OAuthAuthorizationServerProvider):
             "code_verifier": authorization_code.code_verifier,
             "client_id": self.configs.server_client_id,
             "client_secret": self.configs.server_client_secret,
-            "redirect_uri": self.configs.callback_url(self.configs.effective_server_url),
+            "redirect_uri": self.configs.callback_url(
+                self.configs.effective_server_url
+            ),
         }
 
         token: OAuth2Token = await perform_token_flow(

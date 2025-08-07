@@ -38,6 +38,7 @@ configs: ServerConfigs = ServerConfigs()
 
 server_provider: OAuthServerProvider = OAuthServerProvider(configs=configs)
 
+
 def register_mcp_tools(mcp: FastMCP) -> None:
     """
     Register tool functions for the FastMCP server instance.
@@ -50,6 +51,7 @@ def register_mcp_tools(mcp: FastMCP) -> None:
     register_create_tool(mcp)
     register_update_tool(mcp)
     register_delete_tool(mcp)
+
 
 @click.command()
 @click.option(
@@ -74,9 +76,7 @@ def register_mcp_tools(mcp: FastMCP) -> None:
     help="Disable authorization between MCP client and MCP server. [default: False]",
 )
 @click.pass_context
-def main(
-    click_ctx: click.Context, transport, log_level, disable_auth
-) -> int:
+def main(click_ctx: click.Context, transport, log_level, disable_auth) -> int:
     """
     FHIR MCP Server - helping you expose any FHIR Server or API as a MCP Server.
     """
@@ -91,9 +91,7 @@ def main(
     try:
         mcp: FastMCP = configure_mcp_server(disable_auth)
         register_mcp_tools(mcp=mcp)
-        register_mcp_routes(
-            mcp=mcp, server_provider=server_provider
-        )
+        register_mcp_routes(mcp=mcp, server_provider=server_provider)
         logger.info(f"Starting FHIR MCP server with {transport} transport")
         mcp.run(transport=transport)
     except Exception as ex:

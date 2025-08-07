@@ -59,7 +59,11 @@ class ServerConfigs(BaseSettings):
     def scopes(self) -> list[str]:
         # If the raw value is a string, split on empty spaces
         if isinstance(self.server_scopes, str):
-            return [scope.strip() for scope in self.server_scopes.split(" ") if scope.strip()]
+            return [
+                scope.strip()
+                for scope in self.server_scopes.split(" ")
+                if scope.strip()
+            ]
         return [self.server_scopes]
 
     @property

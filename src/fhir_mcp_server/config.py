@@ -16,6 +16,7 @@ configs: ServerConfigs = ServerConfigs()
 
 server_provider: OAuthServerProvider = OAuthServerProvider(configs=configs)
 
+
 def configure_mcp_server(disable_auth: bool) -> FastMCP:
     """
     Configure and instantiate the FastMCP server instance.

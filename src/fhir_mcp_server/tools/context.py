@@ -22,6 +22,7 @@ configs: ServerConfigs = ServerConfigs()
 
 server_provider: OAuthServerProvider = OAuthServerProvider(configs=configs)
 
+
 @click.pass_context
 async def get_user_access_token(click_ctx: click.Context) -> OAuthToken | None:
     """
@@ -40,7 +41,7 @@ async def get_user_access_token(click_ctx: click.Context) -> OAuthToken | None:
     logger.debug("Obtained client access token from context.")
 
     # Return the FHIR access token
-    return user_token # type: ignore
+    return user_token  # type: ignore
 
 
 @click.pass_context
@@ -56,7 +57,7 @@ async def get_async_fhir_client(click_ctx: click.Context) -> AsyncFHIRClient:
 
     disable_auth: bool = click_ctx.obj.get("disable_auth") if click_ctx.obj else False
     if not disable_auth:
-        user_token: AccessToken | None = await get_user_access_token() # type: ignore
+        user_token: AccessToken | None = await get_user_access_token()  # type: ignore
         if not user_token:
             logger.error("User is not authenticated.")
             raise ValueError("User is not authenticated.")

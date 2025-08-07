@@ -16,6 +16,7 @@ configs: ServerConfigs = ServerConfigs()
 
 server_provider: OAuthServerProvider = OAuthServerProvider(configs=configs)
 
+
 def register_mcp_routes(
     mcp: FastMCP,
     server_provider: OAuthServerProvider,

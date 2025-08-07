@@ -21,6 +21,7 @@ configs: ServerConfigs = ServerConfigs()
 
 server_provider: OAuthServerProvider = OAuthServerProvider(configs=configs)
 
+
 def register_capabilities_tool(mcp: FastMCP) -> None:
     @mcp.tool(
         description=(
@@ -59,9 +60,7 @@ def register_capabilities_tool(mcp: FastMCP) -> None:
     ]:
         try:
             logger.debug(f"Invoked with resource_type='{type}'")
-            data: Dict[str, Any] = await get_capability_statement(
-                configs.metadata_url
-            )
+            data: Dict[str, Any] = await get_capability_statement(configs.metadata_url)
             for resource in data["rest"][0]["resource"]:
                 if resource.get("type") == type:
                     logger.info(

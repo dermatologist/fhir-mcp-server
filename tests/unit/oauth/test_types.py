@@ -34,7 +34,7 @@ class TestServerConfigs:
         # Use empty environment and mock file loading to avoid loading existing config
         with patch.dict(os.environ, {}, clear=True):
             config = ServerConfigs(_env_file=None)
-            
+
             assert config.mcp_host == "localhost"
             assert config.mcp_port == 8000
             assert config.mcp_server_url is None
@@ -60,7 +60,9 @@ class TestServerConfigs:
     def test_effective_server_url_explicit(self):
         """Test effective server URL with explicit server_url."""
         with patch.dict(os.environ, {}, clear=True):
-            config = ServerConfigs(mcp_server_url="https://my-server.com", _env_file=None)
+            config = ServerConfigs(
+                mcp_server_url="https://my-server.com", _env_file=None
+            )
             assert config.effective_server_url == "https://my-server.com"
 
     def test_config_with_server_values(self):
@@ -70,7 +72,7 @@ class TestServerConfigs:
                 server_client_id="test_client",
                 server_base_url="https://example.com/fhir",
                 mcp_request_timeout=120,
-                _env_file=None
+                _env_file=None,
             )
 
             assert config.server_client_id == "test_client"
@@ -88,13 +90,17 @@ class TestServerConfigs:
         """Test callback URL generation with custom suffix."""
         with patch.dict(os.environ, {}, clear=True):
             config = ServerConfigs(_env_file=None)
-            callback_url = config.callback_url("https://example.com:8000", "/custom/fhir")
+            callback_url = config.callback_url(
+                "https://example.com:8000", "/custom/fhir"
+            )
             assert str(callback_url) == "https://example.com:8000/custom/fhir"
 
     def test_discovery_url_property(self):
         """Test discovery URL property."""
         with patch.dict(os.environ, {}, clear=True):
-            config = ServerConfigs(server_base_url="https://custom.fhir.org/R4", _env_file=None)
+            config = ServerConfigs(
+                server_base_url="https://custom.fhir.org/R4", _env_file=None
+            )
             assert (
                 config.discovery_url
                 == "https://custom.fhir.org/R4/.well-known/smart-configuration"
@@ -103,7 +109,9 @@ class TestServerConfigs:
     def test_discovery_url_with_trailing_slash(self):
         """Test discovery URL property with trailing slash."""
         with patch.dict(os.environ, {}, clear=True):
-            config = ServerConfigs(server_base_url="https://custom.fhir.org/R4/", _env_file=None)
+            config = ServerConfigs(
+                server_base_url="https://custom.fhir.org/R4/", _env_file=None
+            )
             assert (
                 config.discovery_url
                 == "https://custom.fhir.org/R4/.well-known/smart-configuration"
@@ -112,14 +120,24 @@ class TestServerConfigs:
     def test_metadata_url_property(self):
         """Test metadata URL property."""
         with patch.dict(os.environ, {}, clear=True):
-            config = ServerConfigs(server_base_url="https://custom.fhir.org/R4", _env_file=None)
-            assert config.metadata_url == "https://custom.fhir.org/R4/metadata?_format=json"
+            config = ServerConfigs(
+                server_base_url="https://custom.fhir.org/R4", _env_file=None
+            )
+            assert (
+                config.metadata_url
+                == "https://custom.fhir.org/R4/metadata?_format=json"
+            )
 
     def test_metadata_url_with_trailing_slash(self):
         """Test metadata URL property with trailing slash."""
         with patch.dict(os.environ, {}, clear=True):
-            config = ServerConfigs(server_base_url="https://custom.fhir.org/R4/", _env_file=None)
-            assert config.metadata_url == "https://custom.fhir.org/R4/metadata?_format=json"
+            config = ServerConfigs(
+                server_base_url="https://custom.fhir.org/R4/", _env_file=None
+            )
+            assert (
+                config.metadata_url
+                == "https://custom.fhir.org/R4/metadata?_format=json"
+            )
 
     def test_scopes_property_with_string(self):
         """Test scopes property with string scope."""
@@ -136,7 +154,9 @@ class TestServerConfigs:
     def test_scopes_property_with_extra_spaces(self):
         """Test scopes property with extra spaces."""
         with patch.dict(os.environ, {}, clear=True):
-            config = ServerConfigs(server_scopes="  read   write   admin  ", _env_file=None)
+            config = ServerConfigs(
+                server_scopes="  read   write   admin  ", _env_file=None
+            )
             assert config.scopes == ["read", "write", "admin"]
 
 
@@ -178,7 +198,7 @@ class TestOAuthMetadata:
             OAuthMetadata(
                 # Missing required fields
                 issuer="https://example.com"
-            ) # type: ignore
+            )  # type: ignore
 
 
 class TestOAuthToken:
@@ -260,4 +280,4 @@ class TestAuthorizationCode:
             AuthorizationCode(
                 # Missing required fields
                 code="test_code"
-            ) # type: ignore
+            )  # type: ignore
