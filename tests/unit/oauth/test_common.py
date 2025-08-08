@@ -598,7 +598,7 @@ class TestTokenFlowEdgeCases:
             "token_type": "Bearer",
             "expires_in": 3600,
             "refresh_token": "test_refresh_token",
-            "scope": "read write"
+            "scope": "read write",
         }
 
         with patch(

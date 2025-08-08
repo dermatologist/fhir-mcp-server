@@ -1,9 +1,13 @@
 # Model Context Protocol (MCP) Server for Fast Healthcare Interoperability Resources (FHIR) APIs
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/wso2/fhir-mcp-server/blob/main/LICENSE)
-[![Get Support on Stack Overflow](https://img.shields.io/badge/stackoverflow-wso2-orange)](https://stackoverflow.com/questions/tagged/wso2)
-[![Join the community on Discord](https://img.shields.io/badge/Join%20us%20on-Discord-%23e01563.svg)](https://discord.com/invite/wso2)
-[![X](https://img.shields.io/twitter/follow/wso2.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=wso2)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/wso2/fhir-mcp-server/blob/main/LICENSE) |
+[Original Repository](https://github.com/wso2/fhir-mcp-server)
+
+## Experimental fork
+**This is an experimental fork** of the original FHIR MCP Server, with additional features (calculators, RAG based context for decision support) and improvements.
+
+### Changes so far
+- Refactored the codebase for improved modularity and readability.
 
 ## Table of Contents
 - [Overview](#overview)
@@ -73,7 +77,7 @@ You can use the FHIR MCP Server by installing our Python package, by cloning thi
 
     You can set these by exporting them as environment variables like below or by creating a `.env` file (referencing `.env.example`).
 
-    ```bash 
+    ```bash
     export FHIR_SERVER_BASE_URL=""
     export FHIR_SERVER_CLIENT_ID=""
     export FHIR_SERVER_CLIENT_SECRET=""
@@ -130,7 +134,7 @@ You can use the FHIR MCP Server by installing our Python package, by cloning thi
 
 ### Installing using Docker
 
-You can run the MCP server using Docker for a consistent, isolated environment. 
+You can run the MCP server using Docker for a consistent, isolated environment.
 
 1. Build the Docker Image
 
@@ -226,7 +230,7 @@ Add the following JSON block to your User Settings (JSON) file in VS Code (> V1.
 </table>
 
 ### Claude Desktop
-Add the following JSON block to your Claude Desktop settings to connect to your local MCP server. 
+Add the following JSON block to your Claude Desktop settings to connect to your local MCP server.
  - Launch the Claude Desktop app, click on the Claude menu in the top bar, and select "Settings…".
  - In the Settings pane, click “Developer” in the left sidebar. Then click "Edit Config". This will open your configuration file in your file system. If it doesn’t exist yet, Claude will create one automatically at:
     - macOS: ~/Library/Application Support/Claude/claude_desktop_config.json
@@ -301,7 +305,7 @@ Add the following JSON block to your Claude Desktop settings to connect to your 
 Follow these steps to get the MCP Inspector up and running:
 
 - Open a terminal and run the following command:
-    
+
     `npx -y @modelcontextprotocol/inspector`
 
 - In the MCP Inspector interface:
