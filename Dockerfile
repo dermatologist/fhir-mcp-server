@@ -1,39 +1,34 @@
-# ----------------------------------------------------------------------------------------
-#
-# Copyright (c) 2025, WSO2 LLC. (https://www.wso2.com). All Rights Reserved.
-#
-# This software is the property of WSO2 LLC. and its suppliers, if any.
-# Dissemination of any information or reproduction of any material contained
-# herein in any form is strictly forbidden, unless permitted by WSO2 expressly.
-# You may not alter or remove any copyright or other notice from copies of this content.
-#
-# ----------------------------------------------------------------------------------------
+# syntax=docker/dockerfile:1.7
 
-FROM python:3.11-slim
+# Use uv's Python base image (includes uv + CPython)
+FROM ghcr.io/astral-sh/uv:python3.11-bookworm-slim
 
-# Install uv (for fast dependency management)
-RUN pip install --upgrade pip
 
-# Set workdir
-WORKDIR /app
-
-# Copy only requirements first for better caching
-COPY requirements.txt ./
-RUN pip install -r requirements.txt
-
-# Copy the rest of the code
+# Copy only dependency metadata first for caching
 COPY . .
 
-# Create a non-root user with UID 10001 and switch to it
+# Sync (install) only runtime deps into a local .venv
+# Use a build cache mount for uv to speed subsequent builds
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --frozen --no-dev
+
+
+# Create non-root user (UID 10001 to match prior image)
 RUN useradd -m -u 10001 appuser
 USER 10001
 
-# Expose default port
+# Environment
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/src \
+    PATH="/.venv/bin:${PATH}"
+
 EXPOSE 8000
 
-# Set environment variables (can be overridden at runtime)
-ENV PYTHONUNBUFFERED=1
-ENV PYTHONPATH=/app/src
+# Healthcheck (adjust path/port if app offers one)
+# HEALTHCHECK --interval=30s --timeout=3s --start-period=20s --retries=3 \
+#   CMD python -c "import socket; import sys; s=socket.socket(); \
+#   s.settimeout(2); \
+#   s.connect(('127.0.0.1',8000)); s.close()" || exit 1
 
-# Default command to run the server (can be overridden)
-CMD ["python", "-m", "fhir_mcp_server"]
+# Run installed console script from the virtual environment
+CMD ["uv", "run", "fhir-mcp-server"]
