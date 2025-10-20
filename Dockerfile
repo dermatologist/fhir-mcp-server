@@ -20,7 +20,9 @@ USER 10001
 # Environment
 ENV PYTHONUNBUFFERED=1 \
     PYTHONPATH=/src \
-    PATH="/.venv/bin:${PATH}"
+    PATH="/.venv/bin:${PATH}" \
+    TRANSPORT=stdio
+
 
 EXPOSE 8000
 
@@ -31,4 +33,4 @@ EXPOSE 8000
 #   s.connect(('127.0.0.1',8000)); s.close()" || exit 1
 
 # Run installed console script from the virtual environment
-CMD ["uv", "run", "fhir-mcp-server"]
+CMD ["uv", "run", "fhir-mcp-server", "--transport", "${TRANSPORT}"]
