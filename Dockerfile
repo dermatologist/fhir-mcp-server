@@ -14,8 +14,8 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 
 
 # Create non-root user (UID 10001 to match prior image)
-RUN useradd -m -u 10001 appuser
-USER 10001
+# RUN useradd -m -u 10001 appuser
+# USER 10001
 
 # Environment
 ENV PYTHONUNBUFFERED=1 \
@@ -33,4 +33,4 @@ EXPOSE 8000
 #   s.connect(('127.0.0.1',8000)); s.close()" || exit 1
 
 # Run installed console script from the virtual environment
-CMD ["uv", "run", "fhir-mcp-server", "--transport", "${TRANSPORT}"]
+CMD ["uv", "run", "fhir-mcp-server", "--transport", "stdio", "--disable-auth"]
